@@ -78,4 +78,12 @@ bpaudpcs <- ggplot(BLUPSinfo, aes(x=Specie, y=Predicted_AUDPC , group=Specie)) +
   geom_boxplot(aes(fill=Specie))
 bpaudpcs
 
-
+#Load info U. pisi colonies
+colonies <- data.frame(read.xlsx("U_pisi colonies.xlsx", sheet = "DEFINITIVO", colNames = T))
+head(colonies)
+library(agricolae)
+library(foreign)
+tx <- with(data = colonies, interaction(Rust, HA))
+amod <- aov(HA ~ tx, data=colonies)
+dd<- HSD.test(amod, "tx", group=TRUE)
+dd$groups
